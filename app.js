@@ -16,6 +16,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Routes
 
+const authRoutes = require("./routes/authRoutes");
+
+app.use("/", authRoutes);
+
 //Export app
 
 module.exports = app;
