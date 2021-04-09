@@ -17,8 +17,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //Routes
 
 const authRoutes = require("./routes/authRoutes");
+const homeRoutes = require("./routes/homeRoutes");
 
 app.use("/", authRoutes);
+app.use("/", homeRoutes);
 
 //Export app
 
