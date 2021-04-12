@@ -1,6 +1,7 @@
 const { Router } = require("express");
 
 const User = require("../models/User.model.js");
+<<<<<<< HEAD
 const Address = require("../models/Address.model");
 const router = require("./homeRoutes.js");
 const perfilRouter = Router();
@@ -56,3 +57,19 @@ perfilRouter.post("/perfil/:id/createaddress", async (req, res) => {
 // });
 
 module.exports = perfilRouter;
+=======
+const perfilRouter = Router();
+
+perfilRouter.get("/perfil/:id", async(req, res) => {
+    try {
+        const user = req.body;
+        const { id } = req.params;
+        const perfil = await User.findById(id)
+        res.status(200).json();
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao buscar informações do usuàrio" })
+    }
+})
+
+module.exports = perfilRouter;
+>>>>>>> 001cdfcdaa65b6d6e2f689813dbd0f20d73fc1b8
