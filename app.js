@@ -21,10 +21,12 @@ const authRoutes = require("./routes/authRoutes");
 
 const perfilRoute = require("./routes/perfil.route");
 const homeRoutes = require("./routes/homeRoutes");
+const addressRoutes = require("./routes/perfil.route");
 
 app.use("/", authRoutes);
 app.use("/", perfilRoute);
 app.use("/", homeRoutes);
+app.use("/", addressRoutes);
 
 
 
