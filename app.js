@@ -14,13 +14,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(cors());
+
 //Routes
 
 const authRoutes = require("./routes/authRoutes");
 const perfilRoute = require("./routes/perfil.route")
+const route = require("./routes/product.route")
+const search = require("./routes/search.route")
 
 app.use("/", authRoutes);
 app.use("/", perfilRoute);
+app.use("/", route);
+app.use("/", search);
 
 //Export app
 

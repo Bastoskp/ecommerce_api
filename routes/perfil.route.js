@@ -8,7 +8,7 @@ perfilRouter.get("/perfil/:id", async(req, res) => {
         const user = req.body;
         const { id } = req.params;
         const perfil = await User.findById(id)
-        res.status(200).json();
+        res.status(200).json({ perfil });
     } catch (error) {
         res.status(500).json({ message: "Erro ao buscar informações do usuàrio" })
     }
