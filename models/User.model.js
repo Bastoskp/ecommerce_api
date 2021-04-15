@@ -10,6 +10,7 @@ const UserSchema = new Schema({
         require: [true, "email obrigatório"],
     },
 
+
     passwordHash: {
         type: String,
         required: [true, "favor colocar sua senha"],
@@ -17,14 +18,12 @@ const UserSchema = new Schema({
     firstName: String,
     lastName: String,
     telefone: Number,
-    adress: String,
-    number: Number,
-    cep: Number,
-    state: String,
-    city: String,
+    requests: [{ type: Schema.Types.ObjectId, ref: "requests" }],
+    product: [{ type: Schema.Types.ObjectId, ref: "product" }],
     ordersPlaced: [{ type: Schema.Types.ObjectId, ref: "ordersplaced" }],
     favorite: [{ type: Schema.Types.ObjectId, ref: "product" }],
     cart: { type: Schema.Types.ObjectId, ref: "cart" }
+
 });
 
 module.exports = model("user", UserSchema);
