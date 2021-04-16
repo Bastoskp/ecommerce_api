@@ -19,9 +19,8 @@ const UserSchema = new Schema({
     lastName: String,
     telefone: Number,
     requests: [{ type: Schema.Types.ObjectId, ref: "requests" }],
-    product: [{ type: Schema.Types.ObjectId, ref: "product" }],
     ordersPlaced: [{ type: Schema.Types.ObjectId, ref: "ordersplaced" }],
-    favorite: [{ type: Schema.Types.ObjectId, ref: "product" }],
+    favorites: [{ type: Schema.Types.ObjectId, ref: "product" }],
     cart: { type: Schema.Types.ObjectId, ref: "cart" }
 
 });

@@ -24,6 +24,7 @@ const route = require("./routes/product.route")
 const search = require("./routes/search.route")
 const homeRoutes = require("./routes/homeRoutes");
 const addressRoutes = require("./routes/perfil.route");
+const routeFavorite = require("./routes/favorites.route")
 
 app.use("/", authRoutes);
 app.use("/", perfilRoute);
@@ -31,6 +32,7 @@ app.use("/", route);
 app.use("/", search);
 app.use("/", homeRoutes);
 app.use("/", addressRoutes);
+app.use("/", routeFavorite)
 
 //Export app
 
