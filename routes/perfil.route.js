@@ -42,17 +42,18 @@ perfilRouter.get("/perfil", async(req, res) => {
 
 //EDITAR UM ENDERECO
 
-perfilRouter.patch("/perfil/:id/editaddress", async(req, res) => {
-    try {
-        const address = req.body;
-        const { id } = req.params;
-        const addressEdit = await Address.findByIdAndUpdate(id, address, {
-            new: true,
-        });
-        res.status(201).json(addressEdit);
-    } catch (error) {
-        res.status(500).json({ message: "Server side error on update Address" });
-    }
+
+perfilRouter.patch("/perfil/:id", async (req, res) => {
+  try {
+    const address = req.body;
+    const { id } = req.params;
+    const patchAddress = await Address.findByIdAndUpdate(id, address, {
+      new: true,
+    });
+    res.status(201).json(patchAddress);
+  } catch (error) {
+    res.status(500).json({ message: "Server side error on update Address" });
+  }
 });
 
 //DELETAR UM ENDERECO
