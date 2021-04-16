@@ -4,7 +4,7 @@ const Product = require("../models/products.model");
 const Cart = require("../models/cart.model");
 const User = require("../models/User.model");
 
-const controllers = require("./controllers/cart.controller");
+
 
 
 const route = Router();
