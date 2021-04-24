@@ -56,6 +56,7 @@ perfilRouter.patch("/perfil/:id", async (req, res) => {
 });
 
 //DELETAR UM ENDERECO
+
 perfilRouter.delete("/perfil/:id", async (req, res) => {
   try {
     const { id } = req.params;
