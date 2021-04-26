@@ -22,13 +22,21 @@ route.post("/products/:id", async (req, res) => {
 route.post("/carrinho/:iduser", async (req, res) => {
   try {
     const { iduser } = req.params;
-    const createdCart = await Cart.create({});
-    await User.findByIdAndUpdate(
-      iduser,
-      { cart: createdCart.id },
-      { new: true }
-    );
-    res.status(201).json({ createdCart });
+    const user = await (await User.findById(iduser)).populated("cart");
+    const activeCart = user.cart.find((element) => element.finished === false);
+    if (activeCart) {
+      return res
+        .status(400)
+        .json({ message: "Usuario já tem um carrinho ativo" });
+    } else {
+      const createdCart = await Cart.create({});
+      await User.findByIdAndUpdate(
+        iduser,
+        { cart: createdCart.id },
+        { new: true }
+      );
+      res.status(201).json({ createdCart });
+    }
   } catch (error) {
     res.status(500).json({ message: "Erro ao criar o carrinho" });
   }
