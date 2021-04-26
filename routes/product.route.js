@@ -5,8 +5,6 @@ const Cart = require("../models/cart.model");
 const User = require("../models/User.model");
 const Order = require("../models/OrdersPlaced.model");
 
-const controllers = require("./controllers/cart.controller");
-
 const route = Router();
 
 //adicionando item ao carrinho
@@ -80,28 +78,5 @@ route.patch(
     }
   }
 );
-
-route.get("/minhascompras/:iduser", async (req, res) => {
-  try {
-    const { iduser } = req.params;
-    const userFind = await User.findById(iduser);
-    const orderId = userFind.ordersPlaced;
-    const order = await Order.findById(orderId).populate("ordersPlaced");
-    res.status(200).json({ order });
-  } catch (error) {
-    res.status(500).json({ message: "Compra não efetuada" });
-  }
-});
-
-route.post("/minhascompras/:iduser", async (req, res) => {
-  try {
-    const orderPlaced = req.body;
-    const { iduser } = req.params;
-    const order = await OrderPlaced.findById(iduser);
-    res.status(200).json({ order });
-  } catch (error) {
-    res.status(500).json({ message: "Erro ao busca informações de produto" });
-  }
-});
 
 module.exports = route;
