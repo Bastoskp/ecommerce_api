@@ -3,7 +3,6 @@ const { Router } = require("express");
 const Product = require("../models/products.model");
 const Cart = require("../models/cart.model");
 const User = require("../models/User.model");
-const Order = require("../models/OrdersPlaced.model");
 
 const route = Router();
 
@@ -22,14 +21,24 @@ route.post("/products/:id", async (req, res) => {
 route.post("/carrinho/:iduser", async (req, res) => {
   try {
     const { iduser } = req.params;
-    const createdCart = await Cart.create({});
-    await User.findByIdAndUpdate(
-      iduser,
-      { cart: createdCart.id },
-      { new: true }
-    );
-    res.status(201).json({ createdCart });
+    const user = await User.findById(iduser).populate("cart");
+    console.log(user);
+    const activeCart = user.cart.find((element) => element.finished === false);
+    if (activeCart) {
+      return res
+        .status(400)
+        .json({ message: "Usuario já tem um carrinho ativo" });
+    } else {
+      const createdCart = await Cart.create({});
+      await User.findByIdAndUpdate(
+        iduser,
+        { $push: { cart: createdCart.id } },
+        { new: true }
+      );
+      res.status(201).json({ createdCart });
+    }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Erro ao criar o carrinho" });
   }
 });
@@ -49,7 +58,6 @@ route.get("/carrinho/:idUser", async (req, res) => {
 
 route.patch("/carrinho/:idcart/product/:idproduct", async (req, res) => {
   try {
-    const cart = req.body;
     const { idcart, idproduct } = req.params;
     const updatedCart = await Cart.findByIdAndUpdate(
       idcart,
@@ -59,6 +67,23 @@ route.patch("/carrinho/:idcart/product/:idproduct", async (req, res) => {
     res.status(200).json({ updatedCart });
   } catch (error) {
     res.status(500).json({ message: "Erro ao adicionar produto do carrinho" });
+  }
+});
+
+route.patch("/carrinho/finalizar/:idcart", async (req, res) => {
+  try {
+    const { idcart } = req.params;
+    const updatedCart = await Cart.findByIdAndUpdate(
+      idcart,
+      {
+        finished: true,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "carrinho finalizado" });
+  } catch (error) {
+    res.status(500).json({ message: " erro ao finalizar carrinho" });
   }
 });
 
