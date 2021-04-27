@@ -67,4 +67,19 @@ perfilRouter.delete("/perfil/:id", async (req, res) => {
   }
 });
 
+perfilRouter.get("/perfil/minhascompras/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userCart = await User.findById(id).populate("cart");
+    console.log("carrinho do usuario", userCart);
+    const finishedCarts = userCart.cart.filter(
+      (cart) => cart.finished === true
+    );
+    res.status(200).json(finishedCarts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "erro ao trazer minhas compras" });
+  }
+});
+
 module.exports = perfilRouter;

@@ -19,7 +19,7 @@ const UserSchema = new Schema({
   telefone: Number,
   requests: [{ type: Schema.Types.ObjectId, ref: "requests" }],
   favorites: [{ type: Schema.Types.ObjectId, ref: "product" }],
-  cart: { type: Schema.Types.ObjectId, ref: "cart" },
+  cart: [{ type: Schema.Types.ObjectId, ref: "cart" }],
 });
 
 module.exports = model("user", UserSchema);
