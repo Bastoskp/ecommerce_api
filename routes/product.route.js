@@ -6,6 +6,20 @@ const User = require("../models/User.model");
 
 const route = Router();
 
+//renderizar um produto
+
+route.get("/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findById(id);
+
+    res.status(200).json({ product });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar produto" });
+  }
+});
+
 //adicionando item ao carrinho
 route.post("/products/:id", async (req, res) => {
   try {
@@ -22,7 +36,7 @@ route.post("/carrinho/:iduser", async (req, res) => {
   try {
     const { iduser } = req.params;
     const user = await User.findById(iduser).populate("cart");
-    console.log(user);
+
     const activeCart = user.cart.find((element) => element.finished === false);
     if (activeCart) {
       return res
