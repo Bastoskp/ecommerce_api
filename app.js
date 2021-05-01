@@ -3,8 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
-//connect DB
+const authMiddleware = require("./middlewares/auth.middleware")
+    //connect DB
 require("./config/db.config");
 
 const app = express();
@@ -15,6 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors());
+
+
 
 //Routes
 
@@ -27,13 +29,14 @@ const addressRoutes = require("./routes/perfil.route");
 const routeFavorite = require("./routes/favorites.route")
 
 app.use("/", authRoutes);
-app.use("/", perfilRoute);
 app.use("/", route);
 app.use("/", search);
 app.use("/", homeRoutes);
+
+
+app.use(authMiddleware);
+// Rotas Privadas que precisam de jwt
+app.use("/", perfilRoute);
 app.use("/", addressRoutes);
 app.use("/", routeFavorite)
-
-//Export app
-
 module.exports = app;
