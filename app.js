@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const authMiddleware = require("./middlewares/auth.middleware")
-    //connect DB
+    //connect to DB
 require("./config/db.config");
 
 const app = express();
